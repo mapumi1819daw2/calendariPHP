@@ -1,6 +1,6 @@
 <?php
 // Basat en http://www.triconsole.com/php/calendar_datepicker.php
-require_once('calendar/classes/tc_calendar.php');
+/* require_once('calendar/classes/tc_calendar.php'); */
 ?>
 <HTML>
 <HEAD>
@@ -16,14 +16,48 @@ require_once('calendar/classes/tc_calendar.php');
 	pre { font-size: 13px; font-family: "Consolas", "Menlo", "Monaco", "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif; background-color: #FFFFCC; padding: 5px 5px 5px 5px; }
 	pre .comment { color: #008000; }
 	pre .builtin { color: #FF0000; }
+
+	canvas{
+		width: 500px;
+		height: 500px;
+	}
 	</style>
 	<TITLE>Selecció de gràfica a mostrar</TITLE>
 </HEAD>
 <BODY>
-	<form  method="post">
+	<form id="formulari">
 	<?php
+
+	function getNumbers($n){
+		for($i=0; $i<=23; $i++){
+			$opcio = '<option value="'.$i.'"';
+			$opcio .= ($i == (int)date($n)) ? "selected>": ">";
+			$opcio .= $i. "</option>\n";
+			echo $opcio;
+		}
+	}
+
 	//get class into the page
 	require_once('calendar/classes/tc_calendar.php');
+
+
+	echo "Hora inicial: ";
+
+	?><select id ="HoraIni"><?php
+		getNumbers('H');
+	?>
+	</select>
+
+	<?php
+
+	echo "Minut Inicial: ";
+
+	?><select name ="MinIni"><?php
+		getNumbers('m');
+	?>
+	</select>
+
+	<?php
 
 	echo "Data inicial: ";
 	//instantiate class and set properties
@@ -40,7 +74,31 @@ require_once('calendar/classes/tc_calendar.php');
 
 	//output the calendar
 	$myCalendar->writeScript();	  
-	echo "<BR><BR>Data final: \n";
+
+
+	echo "<BR><BR>Hora final: ";
+	?>
+
+	<select name ="HoraFi"><?php
+		getNumbers('H');
+	?>
+	</select>
+
+
+	<?php
+
+
+	echo "Minut final: ";
+
+	?><select name ="MinFi"><?php
+		getNumbers('m');
+	?>
+	</select>
+
+	<?php
+
+
+	echo "Data final: \n";
 	
 	$myCalendarE = new tc_calendar("date2", true);
 	$myCalendarE->setIcon("calendar/images/iconCalendar.gif");
@@ -56,7 +114,15 @@ require_once('calendar/classes/tc_calendar.php');
 	$myCalendarE->writeScript();	  
 	echo "<BR><BR>\n";
 	?>
-	<INPUT id="submit" TYPE=SUBMIT VALUE='Tramet'>
-	</form>		
-</BODY>
+	<input id="submit" type="submit"/>
+	</form>
+
+
+
+
+
+
+	<canvas id="myCanvas"></canvas>	
+	<canvas id="myCanvas1"></canvas>	
+	<canvas id="myCanvas2"></canvas>	
 </HTML>	

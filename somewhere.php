@@ -1,10 +1,9 @@
 <?php
 require("dbconfig.php");
 
-$theDate1 = isset($_REQUEST["date1"]) ? $_REQUEST["date1"] : "";
+/* $theDate1 = isset($_REQUEST["date1"]) ? $_REQUEST["date1"] : "";
 $theDate2 = isset($_REQUEST["date2"]) ? $_REQUEST["date2"] : "";
-echo "Interval entre $theDate1 i $theDate2";
-
+echo "Interval entre $theDate1 i $theDate2"; */
 
 
 
@@ -15,7 +14,7 @@ if(!$conn){
 }
 
 
-function getInfo($conn){
+
     $sql = "SELECT * FROM $table";
     $result = mysqli_query($conn, $sql);
     
@@ -28,12 +27,11 @@ function getInfo($conn){
     }
 
 
+    echo json_encode($info);
 
-    return $info;
-
-}
-
+  
 
 
-getInfo($conn);
+
 ?> 
+
